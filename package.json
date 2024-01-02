@@ -4,6 +4,8 @@
   "description": "App to track individual working hour and estimate fortnightly pay",
   "main": "index.js",
   "scripts": {
+    "prod": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
