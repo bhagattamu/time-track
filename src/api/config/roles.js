@@ -1,5 +1,12 @@
+const organizationApi = [
+  "createOrganization",
+  "getUserDefaultOrganization",
+  "getOrganizationsOfUser",
+  "updateOrganization",
+];
+
 const roleDetails = {
-  user: ["getUsers"],
+  user: ["getUsers", ...organizationApi],
   admin: [],
 };
 

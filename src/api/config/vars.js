@@ -9,7 +9,7 @@ const vars = {
   },
   jwt: {
     secret: "testsecret",
-    accessTokenExpirationMinutes: "5m",
+    accessTokenExpirationMinutes: "1d",
     refreshTokenExpirationDays: "2d",
   },
 };
