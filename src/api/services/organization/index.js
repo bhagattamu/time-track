@@ -23,7 +23,6 @@ const updateOrganization = async (orgId, organizationBody) => {
   const organizationDoc = await Organization.findById(orgId);
   organizationDoc.name = organizationBody.name;
   organizationDoc.default = organizationBody.default;
-  organizationDoc.setting = organizationBody.setting;
   await organizationDoc.save();
   return organizationDoc.transform();
 };

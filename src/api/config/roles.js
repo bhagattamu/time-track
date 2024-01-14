@@ -5,8 +5,24 @@ const organizationApi = [
   "updateOrganization",
 ];
 
+const organizationSettingApi = [
+  "createOrganizationSetting",
+  "getOrganizationSetting",
+  "updateOrganizationSetting",
+];
+
+const trackApi = ["createTrack", "updateTrack", "getTrackById"];
+
+const timeLogsApi = ["getAllTimeLogs"];
+
 const roleDetails = {
-  user: ["getUsers", ...organizationApi],
+  user: [
+    "getUsers",
+    ...organizationApi,
+    ...organizationSettingApi,
+    ...trackApi,
+    ...timeLogsApi,
+  ],
   admin: [],
 };
 
