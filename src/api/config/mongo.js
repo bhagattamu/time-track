@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logger = require("./logger");
 const { mongo } = require("./vars");
 
 mongoose.connection.on("error", (err) => {
