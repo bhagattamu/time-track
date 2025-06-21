@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const { status: httpStatus } = require("http-status");
 const settingService = require("../../services/setting");
 const trackService = require("../../services/track");
 const { validateTrackData } = require("../../validations/track.validation");
@@ -9,7 +9,7 @@ const createTrack = async (req, res) => {
   const timeZone = req.header["timeZone"];
   const { error } = validateTrackData(req.body);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
 
   const setting = await settingService.getSetting(organization);
@@ -37,7 +37,7 @@ const updateTrack = async (req, res) => {
 
   const { error } = validateTrackData(trackBody);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
   const updatedTrack = await trackService.updateSetting(id, trackBody);
   return res.status(httpStatus.OK).json(updatedTrack);

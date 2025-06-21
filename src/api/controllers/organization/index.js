@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const { status: httpStatus } = require("http-status");
 const organizationService = require("../../services/organization");
 const {
   validateOrganizationData,
@@ -9,7 +9,7 @@ const createOrganization = async (req, res) => {
 
   const { error } = validateOrganizationData(organization);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
   const createdOrganization = await organizationService.createOrganization(
     organization
@@ -40,7 +40,7 @@ const updateOrganization = async (req, res) => {
 
   const { error } = validateOrganizationData(organization);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
   const updatedOrganization = await organizationService.updateOrganization(
     orgId,

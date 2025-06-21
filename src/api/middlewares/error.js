@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const httpStatus = require("http-status");
+const { status: httpStatus } = require("http-status");
 const { env } = require("../config/vars");
-const logger = require("../config/logger");
 const ApiError = require("../utils/ApiError");
 
-const errorConverter = (err, req, res, next) => {
+const errorConverter = (err, _req, _res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {
     const statusCode =
@@ -17,8 +16,7 @@ const errorConverter = (err, req, res, next) => {
   next(error);
 };
 
-// eslint-disable-next-line no-unused-vars
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, _req, res, _next) => {
   let { statusCode, message } = err;
   if (env === "production" && !err.isOperational) {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;

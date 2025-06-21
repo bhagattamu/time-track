@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const { status: httpStatus } = require("http-status");
 const organizationSettingService = require("../../services/setting");
 const {
   validateOrganizationSettingData,
@@ -8,7 +8,7 @@ const createSetting = async (req, res) => {
   const organizationSettingBody = req.body;
   const { error } = validateOrganizationSettingData(organizationSettingBody);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
   const createdOrganizationSetting =
     await organizationSettingService.createSetting(organizationSettingBody);
@@ -21,7 +21,7 @@ const updateOrganizationSetting = async (req, res) => {
 
   const { error } = validateOrganizationSettingData(organizationSetting);
   if (error) {
-    res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+    throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
   const updatedOrganizationSetting =
     await organizationSettingService.updateSetting(orgId, organizationSetting);

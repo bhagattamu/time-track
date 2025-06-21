@@ -1,4 +1,4 @@
-const httpStatus = require("http-status");
+const { status: httpStatus } = require("http-status");
 const timeLogService = require("../../services/timelog");
 
 const getAllTimeLogs = async (req, res) => {
