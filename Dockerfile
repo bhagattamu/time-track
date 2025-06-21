@@ -44,6 +44,8 @@ ENV NODE_ENV production
 RUN --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
+RUN mkdir -p logs
+
 # Run the application as a non-root user.
 USER node
 

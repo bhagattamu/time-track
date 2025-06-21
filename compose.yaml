@@ -39,6 +39,8 @@ services:
     command: npm run prod
     ports:
       - ${APP_PORT}:3000
+    volumes:
+      - ./logs/:/usr/src/app/logs
     restart: unless-stopped
     links: 
       - mongo
