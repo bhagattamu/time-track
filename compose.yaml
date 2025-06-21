@@ -34,9 +34,9 @@ services:
       target: production
     environment:
       NODE_ENV: production
+    env_file:
+      - .env
     command: npm run prod
-    volumes:
-      - /usr/src/app/node_modules
     ports:
       - ${APP_PORT}:3000
     restart: unless-stopped
