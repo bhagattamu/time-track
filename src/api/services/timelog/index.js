@@ -1,11 +1,13 @@
-const mongoose = require("mongoose");
+const {
+  Types: { ObjectId },
+} = require("mongoose");
 const { Track } = require("../../models/track");
 
 const getAllTimeLogs = async (userId, timezone) => {
   const timeLogs = await Track.aggregate([
     {
       $match: {
-        user: new mongoose.Types.ObjectId(userId),
+        user: ObjectId.createFromHexString(userId),
       },
     },
     {
