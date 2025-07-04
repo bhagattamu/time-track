@@ -16,6 +16,20 @@ const login = async ({ email, password }) => {
   };
 };
 
+const refreshToken = async (refreshToken) => {
+  const userId = await tokenService.verifyTokens(refreshToken);
+  if (!userId) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid refresh token");
+  }
+  const user = await userService.getUserById(userId);
+  const tokens = await tokenService.generateAuthTokens(user);
+  return {
+    user,
+    tokens,
+  };
+};
+
 module.exports = {
   login,
+  refreshToken,
 };

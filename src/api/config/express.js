@@ -5,6 +5,7 @@ const { default: helmet } = require("helmet");
 const compression = require("compression");
 const { status: httpStatus } = require("http-status");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
 const { apiVersion, env } = require("./vars");
 const routes = require(`../v${apiVersion}/routes`);
 const { errorConverter, errorHandler } = require("../middlewares/error");
@@ -25,7 +26,12 @@ if (env !== "test") {
 // set security HTTP headers
 app.use(helmet());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    credentials: true, // Allow cookies to be sent with requests
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -34,6 +40,7 @@ app.use(compression());
 
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
+app.use(cookieParser());
 
 app.get("/health", (_req, res) => {
   res.status(200).send("Healthy");

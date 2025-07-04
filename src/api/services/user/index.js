@@ -8,11 +8,15 @@ const createUser = async (userBody) => {
   }
   const newUser = new User(userBody);
   const savedUser = await newUser.save();
-  return savedUser.transform();
+  return savedUser;
 };
 
 const getUserByEmail = async (email) => {
   return User.findOne({ email });
+};
+
+const getUserById = async (id) => {
+  return User.findById(id);
 };
 
 const getUsers = async () => {
@@ -22,5 +26,6 @@ const getUsers = async () => {
 module.exports = {
   createUser,
   getUserByEmail,
+  getUserById,
   getUsers,
 };
