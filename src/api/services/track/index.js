@@ -22,7 +22,7 @@ const track = async (trackData) => {
 
   const trackedTime = new Track(trackData);
   const savedTrackedTime = await trackedTime.save();
-  return savedTrackedTime.transform();
+  return savedTrackedTime;
 };
 
 const updateTrack = async (id, trackData) => {
@@ -33,7 +33,7 @@ const updateTrack = async (id, trackData) => {
   trackedTimeDoc.move = trackData.move;
   trackedTimeDoc.extra = trackData.extra;
   await trackedTimeDoc.save();
-  return trackedTimeDoc.transform();
+  return trackedTimeDoc;
 };
 
 const getTrackById = async (id) => {

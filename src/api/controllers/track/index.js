@@ -39,13 +39,15 @@ const updateTrack = async (req, res) => {
   if (error) {
     throw new ApiError(httpStatus.BAD_REQUEST, error.details[0].message);
   }
-  const updatedTrack = await trackService.updateSetting(id, trackBody);
+  const updatedTrack = await trackService
+    .updateSetting(id, trackBody)
+    .transform();
   return res.status(httpStatus.OK).json(updatedTrack);
 };
 
 const getTrackById = async (req, res) => {
   const id = req.params.id;
-  const trackData = await trackService.getTrackById(id);
+  const trackData = await trackService.getTrackById(id).transform();
   return res.status(httpStatus.OK).json(trackData);
 };
 
