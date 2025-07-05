@@ -22,6 +22,24 @@ const OrganizationSchema = new mongoose.Schema(
   }
 );
 
+OrganizationSchema.pre("save", function (next) {
+  const orgDoc = this;
+  if (orgDoc.default) {
+    // Set all other organizations of the user to not default
+    mongoose
+      .model("Organization")
+      .updateMany(
+        { user: orgDoc.user, _id: { $ne: orgDoc._id } },
+        { $set: { default: false } }
+      )
+      .exec()
+      .then(() => next())
+      .catch((err) => next(err));
+  }
+
+  next();
+});
+
 OrganizationSchema.index({ user: 1, name: 1 }, { unique: true });
 
 OrganizationSchema.method({
