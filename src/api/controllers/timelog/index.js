@@ -2,11 +2,15 @@ const { status: httpStatus } = require("http-status");
 const timeLogService = require("../../services/timelog");
 
 const getAllTimeLogs = async (req, res) => {
-  const timeZone = req.headers["timezone"];
   const user = req.user;
-  const timeLogs = await timeLogService.getAllTimeLogs(user.id, timeZone);
+  const query = req.query;
 
-  res.status(httpStatus.OK).json(timeLogs);
+  const timeLogsData = await timeLogService.getAllTimeLogs(user.id, query);
+
+  res.status(httpStatus.OK).json({
+    ...timeLogsData,
+    data: timeLogsData.data.map((timelog) => timelog.transform()),
+  });
 };
 
 module.exports = {

@@ -11,7 +11,12 @@ const organizationSettingApi = [
   "updateOrganizationSetting",
 ];
 
-const trackApi = ["createTrack", "updateTrack", "getTrackById"];
+const trackApi = [
+  "createTrack",
+  "updateTrack",
+  "getTrackById",
+  "getActiveTrack",
+];
 
 const timeLogsApi = ["getAllTimeLogs"];
 
