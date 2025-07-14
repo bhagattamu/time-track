@@ -23,7 +23,7 @@ services:
       - ${APP_PORT}:3000
       - 9229:9229
     restart: unless-stopped
-    links: 
+    links:
       - mongo
       - mongo-express
       - mail-catcher
@@ -42,40 +42,42 @@ services:
     volumes:
       - ./logs/:/usr/src/app/logs
     restart: unless-stopped
-    links: 
+    links:
       - mongo
   mongo:
     image: mongo:8
     container_name: time-track-mongo
     ports:
-        - ${DB_PORT}:27017
+      - ${DB_PORT}:27017
+    command:
+      - --storageEngine
+      - wiredTiger
+      - --auth
     environment:
-        - MONGO_INITDB_DATABASE=${DB_NAME}
-        - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DB_NAME}
     volumes:
-        - ${DATABASE_VOLUME_MOUNT}:/data/db
+      - ${DATABASE_VOLUME_MOUNT}:/data/db
     restart: unless-stopped
-    command: ['mongod', '--auth']
 
   mongo-express:
     image: mongo-express
     container_name: time-track-mongo-express-ui
     ports:
-        - ${MONGO_EXPRESS_UI_PORT}:8081
+      - ${MONGO_EXPRESS_UI_PORT}:8081
     environment:
-        ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
-        ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
-        ME_CONFIG_OPTIONS_EDITORTHEME: 'ambiance'
-        ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+      ME_CONFIG_OPTIONS_EDITORTHEME: 'ambiance'
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/
     restart: unless-stopped
     links:
-        - mongo
+      - mongo
 
   mail-catcher:
     image: sj26/mailcatcher
     container_name: time-track-mailcatcher
     ports:
-        - ${MAILCATCHER_PORT}:1080
+      - ${MAILCATCHER_PORT}:1080
     restart: unless-stopped
-
