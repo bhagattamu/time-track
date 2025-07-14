@@ -8,9 +8,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 exports.connect = () => {
-  mongoose
-    .connect(mongo.uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB Connected!!!"));
+  mongoose.connect(mongo.uri).then(() => console.log("MongoDB Connected!!!"));
 
   return mongoose.connection;
 };
