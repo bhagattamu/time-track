@@ -27,6 +27,8 @@ services:
       - mongo
       - mongo-express
       - mail-catcher
+    networks:
+      - app-network
   prod-app:
     container_name: time-track-prod
     build:
