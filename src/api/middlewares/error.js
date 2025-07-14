@@ -25,7 +25,6 @@ const errorHandler = (err, _req, res, _next) => {
   }
 
   res.locals.errorMessage = err.message;
-  if (env === "production") logger.error(err.stack);
   const response = {
     code: statusCode,
     message,
