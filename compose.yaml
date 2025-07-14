@@ -44,6 +44,8 @@ services:
     restart: unless-stopped
     links:
       - mongo
+    networks:
+      - app-network
   mongo:
     image: mongo:8
     container_name: time-track-mongo
@@ -60,6 +62,8 @@ services:
     volumes:
       - ${DATABASE_VOLUME_MOUNT}:/data/db
     restart: unless-stopped
+    networks:
+      - app-network
 
   mongo-express:
     image: mongo-express
@@ -74,6 +78,8 @@ services:
     restart: unless-stopped
     links:
       - mongo
+    networks:
+      - app-network
 
   mail-catcher:
     image: sj26/mailcatcher
@@ -81,3 +87,9 @@ services:
     ports:
       - ${MAILCATCHER_PORT}:1080
     restart: unless-stopped
+    networks:
+      - app-network
+
+  networks:
+    app-network:
+      driver: bridge
